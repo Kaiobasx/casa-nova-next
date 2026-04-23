@@ -3,7 +3,7 @@
 import { useCountdown } from "@/hooks/useCountdown";
 
 // 🗓️ Altere esta data para a data real do Chá de Casa Nova
-const EVENT_DATE = "2025-12-25T18:00:00";
+const EVENT_DATE = "2026-12-25T18:00:00";
 
 interface TimeBlockProps {
   value: number;

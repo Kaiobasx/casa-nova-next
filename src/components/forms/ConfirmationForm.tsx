@@ -29,8 +29,21 @@ const initialData: FormData = {
   mensagem: "",
 };
 
-export function ConfirmationForm() {
-  const [formData, setFormData] = useState<FormData>(initialData);
+// 1. ADICIONAMOS AS PROPS AQUI (Opcionais, para você poder usar esse form na Home também)
+interface ConfirmationFormProps {
+  giftId?: number;
+  giftName?: string;
+}
+
+// 2. RECEBEMOS AS PROPS NO COMPONENTE
+export function ConfirmationForm({ giftId, giftName }: ConfirmationFormProps) {
+
+  // 3. INJETAMOS O NOME DO PRESENTE NO ESTADO INICIAL
+  const [formData, setFormData] = useState<FormData>({
+    ...initialData,
+    presente: giftName || "", // Se vier da tela de detalhes, já preenche automático!
+  });
+
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
 
@@ -46,9 +59,10 @@ export function ConfirmationForm() {
     setStatus("loading");
     setErrorMsg("");
 
-    // Payload para o N8N
+    // Payload para o N8N (Adicionamos o giftId para você saber exatamente o item)
     const payload = {
       ...formData,
+      giftId: giftId || null,
       adultos: Number(formData.adultos),
       criancas: Number(formData.criancas),
       timestamp: new Date().toISOString(),
